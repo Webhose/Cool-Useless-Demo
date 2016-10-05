@@ -1,4 +1,5 @@
-# Cool-Useless-Demo
+Cool-Useless-Demo
+=================
 A cool (but quite useless) entity graph generator using `webhose.io <https://webhose.io>`_.
 
 This script depends on `Webhose Python SDK <https://github.com/Buzzilla/webhose-python>`_. 
