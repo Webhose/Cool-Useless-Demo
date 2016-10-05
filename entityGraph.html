@@ -1,170 +1,178 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="@{'/public/javascripts/external/vivagraph.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<!DOCTYPE html>
 
-<style type="text/css">
-    #graph {
-        width: 100%;
-        height: 800px;
-        background-color: transparent;
-        margin: auto;
+<html>
+    <head>
 
-    }
-    svg { width: 100%; height: 100%; overflow: hidden; }
-</style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="../../dist/vivagraph.js"></script>
 
+        <style type="text/css">
+            #graph {
+                width: 100%;
+                height: 800px;
+                background-color: transparent;
+                margin: auto;
 
-
-<script type="text/javascript">
-
-
-    var persons = {"Nate Taplin": ["Ben Blanchard", "Jason Subler", "John Ruwitch", "Kevin Yao", "Engen Tham"], "Bashar Assad": ["Barack Obama", "John Kerry", "Sergey Lavrov", "Theresa May", "Recep Tayyip Erdogan"], "Pierre Curtis": ["Ben Carson", "Mike Pence", "Milton Lewis", "Hillary Clinton", "Lawrence Glass"], "Siamand Rahman": ["Philip Craven", "David Weir", "Trischa Zorn", "Thomas Bach", "Xu Qing"], "Vladimir Putin": ["Theresa May", "Xi Jinping", "Barack Obama", "Narendra Modi", "Jacob Zuma"], "Gary Johnson": ["Hillary Clinton", "Donald Trump", "Jill Stein", "Jeff Flake", "George W. Bush"], "Richard Nixon": ["Donald Trump", "Hillary Clinton", "Tim Kaine", "Barack Obama", "Mike Pence"], "Recep Tayyip Erdogan": ["Barack Obama", "Theresa May", "John Kerry", "Fethullah Gulen", "Bashar Assad"], "Tina Bellon": ["Jan Schwartz", "Angela Merkel", "Heinrich Hiesinger", "Edward Taylor", "Caroline Copley"], "Harro Ten Wolde": ["Harro Ten Wolde", "Georgina Prodhan", "Edward Taylor", "Jan Schwartz", "Caroline Copley"], "Binali Yildirim": ["Barack Obama", "Rami Abdurrahman", "David Dolan", "Tayyip Erdogan", "Recep Tayyip Erdogan"], "Mike Pence": ["Mike Pence", "Donald Trump", "Hillary Clinton", "Ben Carson", "Tim Kaine"], "Tayyip Erdogan": ["Barack Obama", "Angela Merkel", "Binali Yildirim", "Andrea Shalal", "Vladimir Putin"], "Barack Obama": ["Xi Jinping", "Theresa May", "Susan Rice", "John Kerry", "Bashar Assad"], "Andreas Scheuer": ["Angela Merkel", "Leif-Erik Holm", "Frauke Petry", "Peter Tauber", "Horst Seehofer"], "Gernot Heller": ["Angela Merkel", "Andrea Shalal", "Sigmar Gabriel", "Caroline Copley", "Erik Kirschbaum"], "John Kerry": ["John Kerry", "Barack Obama", "Theresa May", "Sergey Lavrov", "Bashar Assad"], "Michael Martina": ["Barack Obama", "Roberta Rampton", "John Ruwitch", "Xi Jinping", "Jason Subler"], "Malcolm Turnbull": ["Xi Jinping", "Theresa May", "Barack Obama", "Narendra Modi", "Sue-Lin Wong"], "Milton Lewis": ["Ben Carson", "Mike Pence", "Pierre Curtis", "Hillary Clinton", "Lawrence Glass"], "Madeline Chambers": ["Angela Merkel", "Michael Nienaber", "Andrea Shalal", "Frank-Walter Steinmeier", "Michelle Martin"], "Seda Sezer": ["Seda Sezer", "Tayyip Erdogan", "Nick Tattersall", "Tulay Karadeniz", "David Dolan"], "Ben Blanchard": ["Xi Jinping", "Malcolm Turnbull", "John Ruwitch", "Sue-Lin Wong", "Barack Obama"], "Frank-Walter Steinmeier": ["Angela Merkel", "Andrea Shalal", "Recep Tayyip Erdogan", "Madeline Chambers", "Vladimir Putin"], "Michel Temer Greg\u00f3rio Duvivier": ["Michel Temer", "Greg\u00f3rio Duvivier", "De Janeiro"], "Sergey Lavrov": ["John Kerry", "Barack Obama", "Bashar Assad", "Theresa May", "Recep Tayyip Erdogan"], "Daniel Dias": ["Philip Craven", "Thomas Bach", "Michel Temer", "Dilma Rousseff", "Walter Scheel"], "Michelle Martin": ["Angela Merkel", "Madeline Chambers", "Sigmar Gabriel", "Stephen Powell", "Frank-Walter Steinmeier"], "David Weir": ["David Weir", "Siamand Rahman", "Philip Craven", "Ellie Simmonds", "Trischa Zorn"], "Ahmad Al-Masalmeh": ["Rami Abdurrahman", "Bashar Assad", "Sergey Lavrov", "John Kerry", "Jabhat Fatah Al-Sham"], "Kylie Maclellan": ["David Davis", "Theresa May", "Elizabeth Piper", "Mark Potter", "William Schomberg"], "Thomas Jaeger": ["Angela Merkel", "Erik Kirschbaum", "Frauke Petry", "Leif-Erik Holm", "Michael Grosse-Broemer"], "Andrea Shalal": ["Angela Merkel", "Erik Kirschbaum", "Tayyip Erdogan", "Gernot Heller", "Frank-Walter Steinmeier"], "Erik Kirschbaum": ["Angela Merkel", "Andrea Shalal", "Thomas Jaeger", "Gernot Heller", "Frauke Petry"], "Roberta Rampton": ["Barack Obama", "Xi Jinping", "Theresa May", "John Ruwitch", "Michael Martina"], "Erwin Sellering": ["Angela Merkel", "Peter Tauber", "Leif-Erik Holm", "Frauke Petry", "Andreas Scheuer"], "Jerome Boateng": ["Angela Merkel", "Manuel Neuer", "Thomas Mueller", "Frieder Weinhold", "Bastian Schweinsteiger"], "Marisa Monte": ["Michel Temer", "Greg\u00f3rio Duvivier"], "Donald Trump": ["Hillary Clinton", "Barack Obama", "Ben Carson", "Bishop Wayne T. Jackson", "Mike Pence"], "John Davison": ["Bashar Al-Assad", "Barack Obama", "Tom Miles", "Roberta Rampton", "Michael Ratney"], "Michel Temer": ["Greg\u00f3rio Duvivier", "Vladimir Putin", "Narendra Modi", "Jacob Zuma", "Xi Jinping"], "Bishop Wayne T. Jackson": ["Donald Trump", "Hillary Clinton", "Mike Pence", "Ben Carson", "Felicia Reese"], "Caroline Copley": ["Angela Merkel", "Michelle Martin", "Tina Bellon", "Jan Schwartz", "Harro Ten Wolde"], "De Janeiro": ["De Janeiro", "Michel Temer", "Philip Craven", "Abdellatif Baka", "Greg\u00f3rio Duvivier"], "Luz Da Serra": ["Luz Da Serra", "Maria Isabel Barreno", "Marcelo Rebelo De Sousa", "Michel Temer", "Greg\u00f3rio Duvivier"], "Susan Rice": ["Susan Rice", "Barack Obama", "Xi Jinping", "Mark Burns", "Theresa May"], "Marcelo Rebelo De Sousa": ["Maria Isabel Barreno", "Luz Da Serra", "Jo\u00e3o Moutinho", "Donald Tusk", "Ricardo A"], "Orrin Hatch": ["Mitch Mcconnell", "Donald Trump", "Hillary Clinton", "Paul Ryan", "Bernie Sanders"], "Theresa May": ["Barack Obama", "Xi Jinping", "John Kerry", "Bashar Assad", "Malcolm Turnbull"], "Ibrahim Kalin": ["Recep Tayyip Erdogan", "Tayyip Erdogan", "Joe Biden", "Bashar Assad", "Rami Abdurrahman"], "Joe Biden": ["Joe Biden", "Hillary Clinton", "Donald Trump", "Mike Pence", "Tim Kaine"], "Leif-Erik Holm": ["Leif-Erik Holm", "Angela Merkel", "Peter Tauber", "Frauke Petry", "Andreas Scheuer"], "Vladimir Soldatkin": ["Vladimir Putin", "Barack Obama", "Jack Stubbs", "Theresa May", "William James"], "Bernie Sanders": ["Hillary Clinton", "Donald Trump", "Gary Johnson", "Jill Stein", "Barack Obama"], "Xi Jinping": ["Xi Jinping", "Barack Obama", "Malcolm Turnbull", "Narendra Modi", "Theresa May"], "Vikas Swarup": ["Narendra Modi", "Xi Jinping", "Theresa May", "Malcolm Turnbull", "Barack Obama"], "Shinzo Abe": ["Shinzo Abe", "Xi Jinping", "Theresa May", "Barack Obama", "Vladimir Putin"], "Mark Potter": ["David Dolan", "Kylie Maclellan", "John Davison", "Vladimir Soldatkin", "Theresa May"], "Sigmar Gabriel": ["Angela Merkel", "Jerome Boateng", "Josef Schuster", "Marine Le Pen", "Frauke Petry"], "Peter Tauber": ["Angela Merkel", "Leif-Erik Holm", "Frauke Petry", "Erwin Sellering", "Lorenz Caffier"], "Nick Tattersall": ["Humeyra Pamuk", "Tayyip Erdogan", "Edmund Blair", "Barack Obama", "Vladimir Putin"], "Paul Ryan": ["Paul Ryan", "Donald Trump", "Hillary Clinton", "Bernie Sanders", "Mitch Mcconnell"], "Greg\u00f3rio Duvivier": ["Michel Temer", "Michel Temer Greg\u00f3rio Duvivier", "De Janeiro", "Marisa Monte", "Luz Da Serra"], "Ann Kirkpatrick": ["Donald Trump", "Hillary Clinton", "Gary Johnson", "Jeff Flake", "Jill Stein"], "Tim Kaine": ["Tim Kaine", "Hillary Clinton", "Donald Trump", "Mike Pence", "Richard Nixon"], "Abdellatif Baka": ["Matthew Centrowitz", "Henry Kirwa", "Tamiru Demisse", "Fouad Baka", "Oscar Pistorius"], "Mark Burns": ["Mark Burns", "Donald Trump", "Hillary Clinton", "Susan Rice", "Anna Kooiman"], "Maria Isabel Barreno": ["Marcelo Rebelo De Sousa", "Armando Freitas Filho Terceiro", "Rio Marcelo Rebelo De Sousa", "Sarau Leituras De Poeta", "Armando Freitas Filho Sarau Leituras De Poeta"], "Jabhat Fatah Al-Sham": ["Jabhat Fatah Al-Sham", "Bashar Assad", "John Kerry", "Charles Lister", "Basma Kodmani"], "Hillary Clinton": ["Donald Trump", "Barack Obama", "Ben Carson", "Mike Pence", "Bishop Wayne T. Jackson"], "George W. Bush": ["George W. Bush", "Donald Trump", "Hillary Clinton", "Barack Obama", "Jared Kushner"], "Jeff Flake": ["Jeff Flake", "Donald Trump", "Hillary Clinton", "Gary Johnson", "Ann Kirkpatrick"], "Anna Kooiman": ["Susan Rice", "Donald Trump", "Ben Carson", "Mark Burns", "Paul Ryan"], "Jared Kushner": ["Donald Trump", "Barack Obama", "Chris Christie", "George W. Bush", "Jaime Burke"], "John Ruwitch": ["Xi Jinping", "Barack Obama", "Ben Blanchard", "Roberta Rampton", "Shinzo Abe"], "Felicia Reese": ["Ben Carson", "Donald Trump", "Hillary Clinton", "Lawrence Glass", "Milton Lewis"], "Frauke Petry": ["Angela Merkel", "Leif-Erik Holm", "Peter Tauber", "Andreas Scheuer", "Erwin Sellering"], "Thomas Bach": ["Walter Scheel", "Patrick Hickey", "Craig Spence", "Aloysio Falcao", "Philip Craven"], "Angela Merkel": ["Theresa May", "Barack Obama", "Xi Jinping", "Shinzo Abe", "Vladimir Putin"], "Ryan Woo": ["Ryan Woo", "Sue-Lin Wong", "Ben Blanchard", "Xi Jinping", "Kevin Yao"], "Tulay Karadeniz": ["David Dolan", "Tayyip Erdogan", "Daren Butler", "Nick Tattersall", "Seda Sezer"], "Lawrence Glass": ["Ben Carson", "Hillary Clinton", "Donald Trump", "Felicia Reese", "Milton Lewis"], "Marine Le Pen": ["Marine Le Pen", "Nigel Farage", "Geert Wilders", "Angela Merkel", "Donald Trump"], "Josef Schuster": ["Angela Merkel", "Sigmar Gabriel", "Frauke Petry", "Klaus Schroeder", "Beatrix Von Storch"], "Jan Schwartz": ["Tina Bellon", "Edward Taylor", "Andreas Cremer", "Irene Preisinger", "Harro Ten Wolde"], "Sue-Lin Wong": ["Sue-Lin Wong", "Ben Blanchard", "John Ruwitch", "Xi Jinping", "Roberta Rampton"], "Mitch Mcconnell": ["Donald Trump", "Hillary Clinton", "Barack Obama", "Paul Ryan", "Orrin Hatch"], "Engen Tham": ["Engen Tham", "Xi Jinping", "Barack Obama", "John Ruwitch", "Ben Blanchard"], "Michael Grosse-Broemer": ["Angela Merkel", "Frauke Petry", "Thomas Jaeger", "Erik Kirschbaum", "Andrea Shalal"], "Jill Stein": ["Jill Stein", "Hillary Clinton", "Donald Trump", "Gary Johnson", "Bernie Sanders"], "Philip Craven": ["Siamand Rahman", "Thomas Bach", "Daniel Dias", "David Weir", "Trischa Zorn"], "Michael Nienaber": ["Angela Merkel", "Madeline Chambers", "Joseph Nasr", "Steffen Seibert", "Andrea Shalal"], "David Dolan": ["Binali Yildirim", "Tayyip Erdogan", "Seda Sezer", "Barack Obama", "Mark Potter"], "Ben Carson": ["Ben Carson", "Donald Trump", "Hillary Clinton", "Mike Pence", "Felicia Reese"], "Jason Subler": ["Barack Obama", "Roberta Rampton", "Michael Martina", "Nate Taplin", "John Ruwitch"], "Rami Abdurrahman": ["Recep Tayyip Erdogan", "Binali Yildirim", "Ahmad Al-Masalmeh", "Bashar Assad", "Ibrahim Kalin"], "Jacob Zuma": ["Jacob Zuma", "Vladimir Putin", "Michel Temer", "Narendra Modi", "Xi Jinping"], "Kevin Yao": ["Kevin Yao", "Xi Jinping", "Barack Obama", "Ryan Woo", "Roberta Rampton"], "Fethullah Gulen": ["Recep Tayyip Erdogan", "Barack Obama", "Theresa May", "Vikas Swarup", "Tayyip Erdogan"], "Narendra Modi": ["Xi Jinping", "Barack Obama", "Theresa May", "Malcolm Turnbull", "Vladimir Putin"]};
-
-    var images = {"Nate Taplin": null, "Bashar Assad": "http://news.bbc.co.uk/olmedia/390000/images/_391680_basel150.jpg", "Pierre Curtis": "https://www.justmugshots.com/img/118607/tn/allen-pierre-curtis.jpg", "Dilma Rousseff": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Dilma_Rousseff_2011.jpg/134px-Dilma_Rousseff_2011.jpg", "Siamand Rahman": "http://www2.pictures.zimbio.com/gi/2012+London+Paralympics+Day+7+Powerlifting+wQmAhzlzYQ2s.jpg", "Xu Qing": "http://www.dianying.com/images/portraits/XuQing.jpg", "Vladimir Putin": "http://wallenburgpers.com/wp-content/uploads/2014/04/Vladimir_Putin_-_2006-190x190.jpg", "Gary Johnson": "http://www.sbs.com.au/news/sites/sbs.com.au.news/files/styles/thumb_small/public/garyjohnson.jpg?itok=NFFMhpR1", "Horst Seehofer": "https://www.stol.it/var/ezflow_site/storage/images/media/images/bildverwaltung/node_395783/horst-seehofer8/12197461-1-ger-DE/Horst-Seehofer_galerie_klein.jpg", "Manuel Neuer": "http://images4.fanpop.com/image/photos/16200000/Manuel-Neuer-manuel-neuer-16201323-105-120.jpg", "Richard Nixon": "http://www.ducksters.com/biography/uspresidents/richardnixon.jpg", "Recep Tayyip Erdogan": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Recep_Tayyip_Erdogan.PNG/140px-Recep_Tayyip_Erdogan.PNG", "Tina Bellon": null, "Chris Christie": "http://pennpoliticalreview.org/wp-content/uploads/DONUT-150x150.jpg", "Harro Ten Wolde": null, "Walter Scheel": "http://www.archontology.org/images/german/scheel.jpg", "Daren Butler": "http://static.sportskeeda.com/wp-content/uploads/2016/02/2016-02-29t134258z_1_lynxnpec1s11l_rtroptp_3_soccer-europa-gal-laz-100.jpg", "Klaus Schroeder": "http://www.galerie-epikur.de/typo3temp/pics/bba852971e.jpg", "Charles Lister": "http://www.caxtonfoundation.org.uk/scripts/editor/uploaded/Charles-Lister.jpg", "Binali Yildirim": "http://www.haberler.com/trend/54/binali-yildirim_4282_186.jpg", "Tom Miles": "http://www.arcadiarotary.org/wp-content/uploads/2008/11/Andrea-Bundesmann-150x150.jpg", "Thomas Mueller": "https://pbs.twimg.com/profile_images/1241148004/thomas_mueller_foto_klein.jpg", "Mike Pence": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Mike_Pence_February_2015_cropped_color_corrected.jpg/141px-Mike_Pence_February_2015_cropped_color_corrected.jpg", "Tayyip Erdogan": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Recep_Tayyip_Erdogan.PNG/140px-Recep_Tayyip_Erdogan.PNG", "Barack Obama": "http://static.tvgcdn.net/mediabin/showcards/celebs/a-b/thumbs/barack_obama_198527_140x187.png", "Andreas Scheuer": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Andreas_Scheuer_2013.jpg/120px-Andreas_Scheuer_2013.jpg", "Gernot Heller": "http://www.sunball-tennis.de/wp-content/uploads/2013/08/09-01-Tennis-268_opt-3416d966-100x100.jpg", "John Kerry": "http://www.thehindu.com/multimedia/dynamic/03018/TH-22-JOHN_KERRY_3018192c.jpg", "Michael Martina": "http://m.c.lnkd.licdn.com/mpr/pub/image-PyyhxnbTQg9OGHcVvo_7PCqcaZFxQASyXy_wPZGCa0SoQICxPyywX2VTapE1l5vLFAkR/michael-martina.jpg", "Malcolm Turnbull": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Malcolm_Turnbull_at_the_Pentagon_2016_cropped.jpg/127px-Malcolm_Turnbull_at_the_Pentagon_2016_cropped.jpg", "Matthew Centrowitz": "http://ichef.bbci.co.uk/sos2012/images/ic/athletes/144x180/b/bcaf1c61-14c1-4b49-8d95-5c8c1cc6d0c6.jpg", "Stephen Powell": "http://www.aasb.gov.au/admin/file/content2/c3/StephenPowell_1236223533679.jpg", "Milton Lewis": "http://blogs.denverpost.com/opinion/wp-content/blogs.dir/85/files/2013/11/Milton-Lewis-150x150.jpeg", "Thomas Jaeger": "http://cfe-strapping.com/oe_uploads/Hr_Jaeger_s.jpg", "Seda Sezer": "http://www.istanbulsanat.net/files/images/kullanici_fotolar/orta/seda.jpg", "Ben Blanchard": "http://headshots.iavvo.com/avvo/ugc/images/head_shot/standard/112808_1265361966.jpg", "Craig Spence": "http://www.lincolnastronomy.org/Lecturer%20Pics/Craig%20Spence.jpg", "Ellie Simmonds": "http://i3.birminghammail.co.uk/incoming/article177027.ece/ALTERNATES/s148/ellie-simmonds-57069956.jpg", "Trischa Zorn": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/190411_-_Greg_Smith_-_3b_-_2012_Team_processing.jpg/90px-190411_-_Greg_Smith_-_3b_-_2012_Team_processing.jpg", "Frank-Walter Steinmeier": "http://vestnikkavkaza.net/upload2/2015-08-10/3ce4cc8bfaf39954ca814e4c63001a1e.jpg", "Nigel Farage": "http://www.thetimes.co.uk/redbox/s3/redbox-prod/uploads/2016/05/Farage_400x400-150x150.png", "William James": "http://content.answcdn.com/main/content/img/BritannicaConcise/thumbnails/10710.gif", "Michel Temer Greg\u00f3rio Duvivier": null, "Sergey Lavrov": "http://www.hamovhotov.com/timeline/wp-content/uploads/2007/07/sergey-lavrov.jpg", "Daniel Dias": "http://collaboratecom.org/2010/show/home", "Michelle Martin": "http://businessbarbados.com/wp-content/uploads/userphoto/325.thumbnail.jpg", "David Weir": "https://www.edgehill.ac.uk/events/files/2014/10/David-Weir.jpg", "Ahmad Al-Masalmeh": null, "Kylie Maclellan": null, "Sarau Leituras De Poeta": null, "Jaime Burke": "http://images.nymag.com/fashion/models/jburke/jburke_profile_thumbnail_114x173.jpg", "Madeline Chambers": "http://media-cache-ec0.pinimg.com/736x/62/61/fd/6261fd00c7b11c6a097bc6b980e8eeff.jpg", "Andrea Shalal": "https://turnergpa.files.wordpress.com/2011/08/andrea-shalal-esa.jpg", "Jack Stubbs": "http://www.mdc.umn.edu/img/staff_pics/stubbs.jpg", "Erik Kirschbaum": "http://csr-news.net/directory/wp-content/photos/Riccardo_Wagner", "Roberta Rampton": "https://static-ssl.businessinsider.com/image/559e9ed9ecad043178679458-160-120/how-to-handle-a-bully-like-donald-trump.jpg", "Donald Tusk": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Donald_Tusk_3.jpg/150px-Donald_Tusk_3.jpg", "Erwin Sellering": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/13-06-20-erwin-sellering-07.jpg/100px-13-06-20-erwin-sellering-07.jpg", "Jerome Boateng": "http://fussballbilder.net/data/thumbnails/303/gratis_jerome_boateng.jpg", "Marisa Monte": "http://imagens.som13.com/1217379/marisa-monte.jpg", "Irene Preisinger": "http://k.7w7.us/xi/img/users/6/b/a/d3f7c51ea.3300250,1.jpg", "Donald Trump": "https://rashmanly.files.wordpress.com/2016/04/donald-trump.png?w=128&h=119", "John Davison": "http://m.c.lnkd.licdn.com/mpr/pub/image-lEdqvsZMiUes03zAG0zIeGk_yuaQ_PZAzEdQV5LHyX32fONllEdQ57wMyB_Tuq_S64J5/john-davison.jpg", "Michel Temer": "https://pbs.twimg.com/profile_images/1205199212/eu.jpg", "Humeyra Pamuk": "http://i.briefreport.co.uk/upload/news/thumbs/16/39/Mark_rutte_erdogan_supporters_714850.jpg", "Ricardo A": "http://atlas.equilar.com/images/705000/705794.jpg", "Bishop Wayne T. Jackson": "https://media.licdn.com/media/p/8/000/1ad/237/3b58e71.jpg", "Caroline Copley": "http://www.insurancejournal.com/wp-content/uploads/2013/08/Wauthier_Pierre_CV_72dpi-135x166.jpg", "Henry Kirwa": null, "Andreas Cremer": "http://m.c.lnkd.licdn.com/mpr/pub/image-Kksz3tvoDLQDRJ_h6rbnYhEZlaUm4G3mK8gtwbiolG1m4AH2KkstwgYol-28_Vhhgk1V/andreas-cremer.jpg", "De Janeiro": "http://www.themontrealgroup.org/DATA/PHOTO/50_tn~v~bpifrance-alain-renck-isabelle-bebear-vincent-dibetta.jpg", "Patrick Hickey": "http://www.aon.com/risk-services/thought-leadership/podcasts/images/patrick-hickey-130x168.jpg", "Luz Da Serra": "https://s3-sa-east-1.amazonaws.com/s3.eplaces.com.br/_default/eplaces/img-site/bruno-gimenes.png", "Fouad Baka": null, "Beatrix Von Storch": "http://www.ndr.de/fernsehen/storch854_v-content.jpg", "Basma Kodmani": "http://www.france5.fr/emissions/sites/default/files/styles/ftv_personne_teaser/public/images/personne/2015/09/37/kodmani.jpg?itok=vjP8dBoe", "Susan Rice": "https://traditionofexcellence.files.wordpress.com/2008/12/ricesusan.jpg", "Elizabeth Piper": "http://ak-cache.legacy.net/legacy/images/cobrands/press-citizen/photos/icp011033-1_20150814.jpgx?w=130&h=180&option=1&v=0x000000003117803e", "Edmund Blair": "https://s-media-cache-ak0.pinimg.com/avatars/vjojune-1357356934_75.jpg", "Marcelo Rebelo De Sousa": "https://1.bp.blogspot.com/-P_dqET2hSj8/Vzwd5fB-WhI/AAAAAAABMxg/5UOb31UuvA88pKF3I-hQU75PeUCSvjXbgCLcB/s1600/01095.jpg", "Armando Freitas Filho Sarau Leituras De Poeta": null, "Orrin Hatch": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Orrin_Hatch_1977_congressional_photo.jpg/146px-Orrin_Hatch_1977_congressional_photo.jpg", "Theresa May": "http://media.todaybirthdays.com/thumb_x256x256/upload/1956/10/01/theresa-may.jpg", "Georgina Prodhan": "http://www.autonews.com/apps/pbcsi.dll/storyimage/CA/20150427/BLOG06/304279884/AR/0/christiaan-hetzner.jpg&MaxW=115", "Ibrahim Kalin": "http://www.worldwisdom.com/uploads/artists/103.jpg", "Joe Biden": "http://i0.kym-cdn.com/entries/icons/square/000/016/669/bidennn.PNG", "Leif-Erik Holm": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/13-06-20-erwin-sellering-07.jpg/100px-13-06-20-erwin-sellering-07.jpg", "Vladimir Soldatkin": "http://www.tradingsat.com/media/pictures/news/reuters/2014/2014-07-28T053335Z_1007120001_LYNXMPEA6R04A_RTROPTP_1_OFRBS-RUSSIE-IOUKOS-DOMMAGES.JPG", "Bernie Sanders": "http://liberalvaluesblog.com/wp-content/uploads/2015/05/Bernie-Sanders-facebook.jpg", "William Schomberg": "https://www.justmugshots.com/img/8808516/tn/benjamin-steven-brosowski.jpg", "Xi Jinping": "http://www.eneltec-led.com/LED-Lighting-Blog/wp-content/uploads/2012/02/Xi-Jinping.jpg", "Geert Wilders": "http://www.parlement.com/9235000/p/022/02258m.jpg", "Jeff Flake": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Jeff_Flake%2C_official_portrait%2C_113th_Congress.jpg/118px-Jeff_Flake%2C_official_portrait%2C_113th_Congress.jpg", "Shinzo Abe": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Shinzo_Abe_cropped.JPG/120px-Shinzo_Abe_cropped.JPG", "Bashar Al-Assad": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Bashar_al_Assad.jpg/100px-Bashar_al_Assad.jpg", "Rio Marcelo Rebelo De Sousa": null, "Mark Potter": "http://www.sonemat.com/wp-content/themes/sonemat/assets/images/mark_potter.jpg", "Sigmar Gabriel": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Sigmar_Gabriel.jpg/93px-Sigmar_Gabriel.jpg", "Peter Tauber": "http://morgenlage.tagesspiegel.de/wp-content/uploads/2014/06/peter-tauber3.jpg", "Nick Tattersall": "http://fbwealth.co.uk/wp-content/themes/fbwm/images/about-section/nt.jpg", "Paul Ryan": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Paul_Ryan_113th_Congress.jpg/157px-Paul_Ryan_113th_Congress.jpg", "Greg\u00f3rio Duvivier": null, "Ann Kirkpatrick": "http://assets.opensecrets.org/politicians/img/N00029260.jpg", "Tim Kaine": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Tim_Kaine%2C_official_113th_Congress_photo_portrait.jpg/118px-Tim_Kaine%2C_official_113th_Congress_photo_portrait.jpg", "Abdellatif Baka": "http://i.f1g.fr/media/ext/175x175_crop/sport24.lefigaro.fr/var/plain_site/storage/images/tennis/actualites/chardy-face-a-tsonga-a-toronto-575854/13694599-1-fre-FR/Chardy-face-a-Tsonga-a-Toronto.jpg", "Mark Burns": "https://www.ebscohost.com/assets-success/mark_burns_150.jpg", "Tamiru Demisse": null, "Maria Isabel Barreno": "http://www.fletcherpeacockcommunicationsolutions.com/images/photo_fletcher.gif", "Steffen Seibert": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Steffen_Seibert.jpg/80px-Steffen_Seibert.jpg", "Jabhat Fatah Al-Sham": null, "Hillary Clinton": "http://www.uft.org/files/photo/hillary-clinton.jpg", "George W. Bush": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/GeorgeWBush.jpg/155px-GeorgeWBush.jpg", "Vikas Swarup": "http://www.infibeam.com/static/Books/images/authors/vikas-swarup.jpg", "Anna Kooiman": "http://img004.lazygirls.info/people/anna_kooiman/anna_kooiman_closeup10_lBmXEaK.thumb.jpg", "Jared Kushner": "http://img4.bdbphotos.com/images/120x156/c/1/c1jkn9q5yj344y5.jpg?skj2io4l", "John Ruwitch": null, "Lorenz Caffier": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Lorenz_Caffier_Portr%C3%A4t.JPG/100px-Lorenz_Caffier_Portr%C3%A4t.JPG", "Felicia Reese": "https://www.justmugshots.com/img/241187/tn/gabrielle-reese.jpg", "Edward Taylor": "http://blog.cleveland.com/metro/2009/05/small_Edward%20Taylor%20-%20Mug%20Shot.jpg", "Joseph Nasr": "http://www.realsatisfied.com.au/a3e2f/200139838423391403/img/?rand=273d909408ff7f568b67bd7fc4cc98cc", "Heinrich Hiesinger": "http://www.management-kolloquium.de/img_referenten/2015/Hiesinger-Heinricht-ThyssenKrupp.jpg", "Frauke Petry": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Frauke-Petry-20130820.jpg/130px-Frauke-Petry-20130820.jpg", "David Dolan": "http://global.crossrhythms.co.uk/directory_images/120.jpg", "Frieder Weinhold": "http://www.chwev.de/de/files/2009/11/Eduart_02-160x160.jpg", "Oscar Pistorius": "http://media-cache-ec0.pinimg.com/736x/26/3f/f1/263ff18c1be02244a7a123c7de7f1343.jpg", "Angela Merkel": "http://daddytips.com/wp-content/uploads/2009/04/angela-merkel-cleavage-150x150.jpg", "Ryan Woo": "http://gatherboard-images.s3.amazonaws.com/boise-events/Ryan_Woodings-lg.jpg", "Aloysio Falcao": null, "Bastian Schweinsteiger": "http://www.aufgehtsbayern.de/media/galeria/63/2/4/7/7/t_bayern_munchen_bastian_schweinsteiger-207742.jpg", "Tulay Karadeniz": "https://media.licdn.com/media/p/3/000/1c2/034/3a7e011.jpg", "Lawrence Glass": "https://www.justmugshots.com/img/431591/tn/robert-lawrence-glass.jpg", "Marine Le Pen": "http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/10/26/1351256471702/Marine-Le-Pen-003.jpg", "Josef Schuster": "https://wjc-org-website.s3.amazonaws.com/uploads/bio/image/168/thumb_64f58fb29a3af2078f261c25be67b63ebbed95a9.jpg", "Jan Schwartz": "https://etcjournal.files.wordpress.com/2010/09/jan_schwartz160.jpg", "Sue-Lin Wong": "http://www.lowyinterpreter.org/author/image.axd?picture=/avatars/Primary/Sue-Lin%20Wong/Sue-Lin%20Wong2.jpg", "Mitch Mcconnell": "http://www.ragingpencils.com/misc/2013/mcconnell.jpg", "Engen Tham": "http://www.goodlawyerguide.co.uk/system/bw_avatars/17204/tiny/louise-wallace.jpg?1270887287", "Jo\u00e3o Moutinho": null, "Armando Freitas Filho Terceiro": null, "Michael Grosse-Broemer": "https://causa.tagesspiegel.de/img/145x198/michael-grosse-bromer.jpeg", "Jill Stein": "http://www.greenpapers.net/wp-content/uploads/Jill-Stein.jpeg", "Philip Craven": "https://media.licdn.com/media/p/1/000/1a5/3d9/0d0295e.jpg", "Michael Ratney": "http://cdn.thedailybeast.com/etc/authors/m/michael-weiss/image.crop.96.96.jpg/46531762.cached.jpg", "Michael Nienaber": "http://www.phoenix-zement.de/cms/upload/mitarbeiter/Reinhard_Nienaber.jpg", "David Davis": "http://sustainability.wfu.edu/wp-content/uploads/2010/06/David-Davis-150x150.jpg", "Thomas Bach": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/14-01-10-tbh-015.jpg/150px-14-01-10-tbh-015.jpg", "Ben Carson": "http://www.theamericanphilosopher.com/wp-content/uploads/2015/08/Ben-Carson-150x150.jpg", "Jason Subler": null, "Rami Abdurrahman": "https://www.irishtimes.com/polopoly_fs/1.2595745.1459595630!/image/image.jpg_gen/derivatives/box_140/image.jpg", "Jacob Zuma": "http://www.sabinetlaw.co.za/files/images/zuma_jacob.jpg", "Kevin Yao": "http://www.mountsinai.org/files/fad_img_new/91/0000076810028797201691/0000072500004566763331.jpg", "Fethullah Gulen": "https://yerelce.files.wordpress.com/2011/02/fethullah-gulen.jpg", "Narendra Modi": "http://www.mustwach.com/wp-content/uploads/2015/11/narendra_modi_hand_paintitng_photo_303904507-150x150.jpg"}
+            }
+            svg { width: 100%; height: 100%; overflow: hidden; }
+        </style>
 
 
 
-    function hashCode(str) { // java String#hashCode
-        var hash = 0;
-        for (var i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 7) - hash);
-        }
-        return hash;
-    }
+        <script type="text/javascript">
 
-    function intToRGB(i){
-        var c = (i & 0x00FFFFFF)
-                .toString(16)
-                .toUpperCase();
 
-        return "00000".substring(0, 6 - c.length) + c;
-    }
+            var persons = {"Nate Taplin": ["Ben Blanchard", "Jason Subler", "John Ruwitch", "Kevin Yao", "Engen Tham"], "Bashar Assad": ["Barack Obama", "John Kerry", "Sergey Lavrov", "Theresa May", "Recep Tayyip Erdogan"], "Pierre Curtis": ["Ben Carson", "Mike Pence", "Milton Lewis", "Hillary Clinton", "Lawrence Glass"], "Siamand Rahman": ["Philip Craven", "David Weir", "Trischa Zorn", "Thomas Bach", "Xu Qing"], "Vladimir Putin": ["Theresa May", "Xi Jinping", "Barack Obama", "Narendra Modi", "Jacob Zuma"], "Gary Johnson": ["Hillary Clinton", "Donald Trump", "Jill Stein", "Jeff Flake", "George W. Bush"], "Richard Nixon": ["Donald Trump", "Hillary Clinton", "Tim Kaine", "Barack Obama", "Mike Pence"], "Recep Tayyip Erdogan": ["Barack Obama", "Theresa May", "John Kerry", "Fethullah Gulen", "Bashar Assad"], "Tina Bellon": ["Jan Schwartz", "Angela Merkel", "Heinrich Hiesinger", "Edward Taylor", "Caroline Copley"], "Harro Ten Wolde": ["Harro Ten Wolde", "Georgina Prodhan", "Edward Taylor", "Jan Schwartz", "Caroline Copley"], "Binali Yildirim": ["Barack Obama", "Rami Abdurrahman", "David Dolan", "Tayyip Erdogan", "Recep Tayyip Erdogan"], "Mike Pence": ["Mike Pence", "Donald Trump", "Hillary Clinton", "Ben Carson", "Tim Kaine"], "Tayyip Erdogan": ["Barack Obama", "Angela Merkel", "Binali Yildirim", "Andrea Shalal", "Vladimir Putin"], "Barack Obama": ["Xi Jinping", "Theresa May", "Susan Rice", "John Kerry", "Bashar Assad"], "Andreas Scheuer": ["Angela Merkel", "Leif-Erik Holm", "Frauke Petry", "Peter Tauber", "Horst Seehofer"], "Gernot Heller": ["Angela Merkel", "Andrea Shalal", "Sigmar Gabriel", "Caroline Copley", "Erik Kirschbaum"], "John Kerry": ["John Kerry", "Barack Obama", "Theresa May", "Sergey Lavrov", "Bashar Assad"], "Michael Martina": ["Barack Obama", "Roberta Rampton", "John Ruwitch", "Xi Jinping", "Jason Subler"], "Malcolm Turnbull": ["Xi Jinping", "Theresa May", "Barack Obama", "Narendra Modi", "Sue-Lin Wong"], "Milton Lewis": ["Ben Carson", "Mike Pence", "Pierre Curtis", "Hillary Clinton", "Lawrence Glass"], "Madeline Chambers": ["Angela Merkel", "Michael Nienaber", "Andrea Shalal", "Frank-Walter Steinmeier", "Michelle Martin"], "Seda Sezer": ["Seda Sezer", "Tayyip Erdogan", "Nick Tattersall", "Tulay Karadeniz", "David Dolan"], "Ben Blanchard": ["Xi Jinping", "Malcolm Turnbull", "John Ruwitch", "Sue-Lin Wong", "Barack Obama"], "Frank-Walter Steinmeier": ["Angela Merkel", "Andrea Shalal", "Recep Tayyip Erdogan", "Madeline Chambers", "Vladimir Putin"], "Michel Temer Greg\u00f3rio Duvivier": ["Michel Temer", "Greg\u00f3rio Duvivier", "De Janeiro"], "Sergey Lavrov": ["John Kerry", "Barack Obama", "Bashar Assad", "Theresa May", "Recep Tayyip Erdogan"], "Daniel Dias": ["Philip Craven", "Thomas Bach", "Michel Temer", "Dilma Rousseff", "Walter Scheel"], "Michelle Martin": ["Angela Merkel", "Madeline Chambers", "Sigmar Gabriel", "Stephen Powell", "Frank-Walter Steinmeier"], "David Weir": ["David Weir", "Siamand Rahman", "Philip Craven", "Ellie Simmonds", "Trischa Zorn"], "Ahmad Al-Masalmeh": ["Rami Abdurrahman", "Bashar Assad", "Sergey Lavrov", "John Kerry", "Jabhat Fatah Al-Sham"], "Kylie Maclellan": ["David Davis", "Theresa May", "Elizabeth Piper", "Mark Potter", "William Schomberg"], "Thomas Jaeger": ["Angela Merkel", "Erik Kirschbaum", "Frauke Petry", "Leif-Erik Holm", "Michael Grosse-Broemer"], "Andrea Shalal": ["Angela Merkel", "Erik Kirschbaum", "Tayyip Erdogan", "Gernot Heller", "Frank-Walter Steinmeier"], "Erik Kirschbaum": ["Angela Merkel", "Andrea Shalal", "Thomas Jaeger", "Gernot Heller", "Frauke Petry"], "Roberta Rampton": ["Barack Obama", "Xi Jinping", "Theresa May", "John Ruwitch", "Michael Martina"], "Erwin Sellering": ["Angela Merkel", "Peter Tauber", "Leif-Erik Holm", "Frauke Petry", "Andreas Scheuer"], "Jerome Boateng": ["Angela Merkel", "Manuel Neuer", "Thomas Mueller", "Frieder Weinhold", "Bastian Schweinsteiger"], "Marisa Monte": ["Michel Temer", "Greg\u00f3rio Duvivier"], "Donald Trump": ["Hillary Clinton", "Barack Obama", "Ben Carson", "Bishop Wayne T. Jackson", "Mike Pence"], "John Davison": ["Bashar Al-Assad", "Barack Obama", "Tom Miles", "Roberta Rampton", "Michael Ratney"], "Michel Temer": ["Greg\u00f3rio Duvivier", "Vladimir Putin", "Narendra Modi", "Jacob Zuma", "Xi Jinping"], "Bishop Wayne T. Jackson": ["Donald Trump", "Hillary Clinton", "Mike Pence", "Ben Carson", "Felicia Reese"], "Caroline Copley": ["Angela Merkel", "Michelle Martin", "Tina Bellon", "Jan Schwartz", "Harro Ten Wolde"], "De Janeiro": ["De Janeiro", "Michel Temer", "Philip Craven", "Abdellatif Baka", "Greg\u00f3rio Duvivier"], "Luz Da Serra": ["Luz Da Serra", "Maria Isabel Barreno", "Marcelo Rebelo De Sousa", "Michel Temer", "Greg\u00f3rio Duvivier"], "Susan Rice": ["Susan Rice", "Barack Obama", "Xi Jinping", "Mark Burns", "Theresa May"], "Marcelo Rebelo De Sousa": ["Maria Isabel Barreno", "Luz Da Serra", "Jo\u00e3o Moutinho", "Donald Tusk", "Ricardo A"], "Orrin Hatch": ["Mitch Mcconnell", "Donald Trump", "Hillary Clinton", "Paul Ryan", "Bernie Sanders"], "Theresa May": ["Barack Obama", "Xi Jinping", "John Kerry", "Bashar Assad", "Malcolm Turnbull"], "Ibrahim Kalin": ["Recep Tayyip Erdogan", "Tayyip Erdogan", "Joe Biden", "Bashar Assad", "Rami Abdurrahman"], "Joe Biden": ["Joe Biden", "Hillary Clinton", "Donald Trump", "Mike Pence", "Tim Kaine"], "Leif-Erik Holm": ["Leif-Erik Holm", "Angela Merkel", "Peter Tauber", "Frauke Petry", "Andreas Scheuer"], "Vladimir Soldatkin": ["Vladimir Putin", "Barack Obama", "Jack Stubbs", "Theresa May", "William James"], "Bernie Sanders": ["Hillary Clinton", "Donald Trump", "Gary Johnson", "Jill Stein", "Barack Obama"], "Xi Jinping": ["Xi Jinping", "Barack Obama", "Malcolm Turnbull", "Narendra Modi", "Theresa May"], "Vikas Swarup": ["Narendra Modi", "Xi Jinping", "Theresa May", "Malcolm Turnbull", "Barack Obama"], "Shinzo Abe": ["Shinzo Abe", "Xi Jinping", "Theresa May", "Barack Obama", "Vladimir Putin"], "Mark Potter": ["David Dolan", "Kylie Maclellan", "John Davison", "Vladimir Soldatkin", "Theresa May"], "Sigmar Gabriel": ["Angela Merkel", "Jerome Boateng", "Josef Schuster", "Marine Le Pen", "Frauke Petry"], "Peter Tauber": ["Angela Merkel", "Leif-Erik Holm", "Frauke Petry", "Erwin Sellering", "Lorenz Caffier"], "Nick Tattersall": ["Humeyra Pamuk", "Tayyip Erdogan", "Edmund Blair", "Barack Obama", "Vladimir Putin"], "Paul Ryan": ["Paul Ryan", "Donald Trump", "Hillary Clinton", "Bernie Sanders", "Mitch Mcconnell"], "Greg\u00f3rio Duvivier": ["Michel Temer", "Michel Temer Greg\u00f3rio Duvivier", "De Janeiro", "Marisa Monte", "Luz Da Serra"], "Ann Kirkpatrick": ["Donald Trump", "Hillary Clinton", "Gary Johnson", "Jeff Flake", "Jill Stein"], "Tim Kaine": ["Tim Kaine", "Hillary Clinton", "Donald Trump", "Mike Pence", "Richard Nixon"], "Abdellatif Baka": ["Matthew Centrowitz", "Henry Kirwa", "Tamiru Demisse", "Fouad Baka", "Oscar Pistorius"], "Mark Burns": ["Mark Burns", "Donald Trump", "Hillary Clinton", "Susan Rice", "Anna Kooiman"], "Maria Isabel Barreno": ["Marcelo Rebelo De Sousa", "Armando Freitas Filho Terceiro", "Rio Marcelo Rebelo De Sousa", "Sarau Leituras De Poeta", "Armando Freitas Filho Sarau Leituras De Poeta"], "Jabhat Fatah Al-Sham": ["Jabhat Fatah Al-Sham", "Bashar Assad", "John Kerry", "Charles Lister", "Basma Kodmani"], "Hillary Clinton": ["Donald Trump", "Barack Obama", "Ben Carson", "Mike Pence", "Bishop Wayne T. Jackson"], "George W. Bush": ["George W. Bush", "Donald Trump", "Hillary Clinton", "Barack Obama", "Jared Kushner"], "Jeff Flake": ["Jeff Flake", "Donald Trump", "Hillary Clinton", "Gary Johnson", "Ann Kirkpatrick"], "Anna Kooiman": ["Susan Rice", "Donald Trump", "Ben Carson", "Mark Burns", "Paul Ryan"], "Jared Kushner": ["Donald Trump", "Barack Obama", "Chris Christie", "George W. Bush", "Jaime Burke"], "John Ruwitch": ["Xi Jinping", "Barack Obama", "Ben Blanchard", "Roberta Rampton", "Shinzo Abe"], "Felicia Reese": ["Ben Carson", "Donald Trump", "Hillary Clinton", "Lawrence Glass", "Milton Lewis"], "Frauke Petry": ["Angela Merkel", "Leif-Erik Holm", "Peter Tauber", "Andreas Scheuer", "Erwin Sellering"], "Thomas Bach": ["Walter Scheel", "Patrick Hickey", "Craig Spence", "Aloysio Falcao", "Philip Craven"], "Angela Merkel": ["Theresa May", "Barack Obama", "Xi Jinping", "Shinzo Abe", "Vladimir Putin"], "Ryan Woo": ["Ryan Woo", "Sue-Lin Wong", "Ben Blanchard", "Xi Jinping", "Kevin Yao"], "Tulay Karadeniz": ["David Dolan", "Tayyip Erdogan", "Daren Butler", "Nick Tattersall", "Seda Sezer"], "Lawrence Glass": ["Ben Carson", "Hillary Clinton", "Donald Trump", "Felicia Reese", "Milton Lewis"], "Marine Le Pen": ["Marine Le Pen", "Nigel Farage", "Geert Wilders", "Angela Merkel", "Donald Trump"], "Josef Schuster": ["Angela Merkel", "Sigmar Gabriel", "Frauke Petry", "Klaus Schroeder", "Beatrix Von Storch"], "Jan Schwartz": ["Tina Bellon", "Edward Taylor", "Andreas Cremer", "Irene Preisinger", "Harro Ten Wolde"], "Sue-Lin Wong": ["Sue-Lin Wong", "Ben Blanchard", "John Ruwitch", "Xi Jinping", "Roberta Rampton"], "Mitch Mcconnell": ["Donald Trump", "Hillary Clinton", "Barack Obama", "Paul Ryan", "Orrin Hatch"], "Engen Tham": ["Engen Tham", "Xi Jinping", "Barack Obama", "John Ruwitch", "Ben Blanchard"], "Michael Grosse-Broemer": ["Angela Merkel", "Frauke Petry", "Thomas Jaeger", "Erik Kirschbaum", "Andrea Shalal"], "Jill Stein": ["Jill Stein", "Hillary Clinton", "Donald Trump", "Gary Johnson", "Bernie Sanders"], "Philip Craven": ["Siamand Rahman", "Thomas Bach", "Daniel Dias", "David Weir", "Trischa Zorn"], "Michael Nienaber": ["Angela Merkel", "Madeline Chambers", "Joseph Nasr", "Steffen Seibert", "Andrea Shalal"], "David Dolan": ["Binali Yildirim", "Tayyip Erdogan", "Seda Sezer", "Barack Obama", "Mark Potter"], "Ben Carson": ["Ben Carson", "Donald Trump", "Hillary Clinton", "Mike Pence", "Felicia Reese"], "Jason Subler": ["Barack Obama", "Roberta Rampton", "Michael Martina", "Nate Taplin", "John Ruwitch"], "Rami Abdurrahman": ["Recep Tayyip Erdogan", "Binali Yildirim", "Ahmad Al-Masalmeh", "Bashar Assad", "Ibrahim Kalin"], "Jacob Zuma": ["Jacob Zuma", "Vladimir Putin", "Michel Temer", "Narendra Modi", "Xi Jinping"], "Kevin Yao": ["Kevin Yao", "Xi Jinping", "Barack Obama", "Ryan Woo", "Roberta Rampton"], "Fethullah Gulen": ["Recep Tayyip Erdogan", "Barack Obama", "Theresa May", "Vikas Swarup", "Tayyip Erdogan"], "Narendra Modi": ["Xi Jinping", "Barack Obama", "Theresa May", "Malcolm Turnbull", "Vladimir Putin"]};
+
+            var images = {"Nate Taplin": null, "Bashar Assad": "http://news.bbc.co.uk/olmedia/390000/images/_391680_basel150.jpg", "Pierre Curtis": "https://www.justmugshots.com/img/118607/tn/allen-pierre-curtis.jpg", "Dilma Rousseff": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Dilma_Rousseff_2011.jpg/134px-Dilma_Rousseff_2011.jpg", "Siamand Rahman": "http://www2.pictures.zimbio.com/gi/2012+London+Paralympics+Day+7+Powerlifting+wQmAhzlzYQ2s.jpg", "Xu Qing": "http://www.dianying.com/images/portraits/XuQing.jpg", "Vladimir Putin": "http://wallenburgpers.com/wp-content/uploads/2014/04/Vladimir_Putin_-_2006-190x190.jpg", "Gary Johnson": "http://www.sbs.com.au/news/sites/sbs.com.au.news/files/styles/thumb_small/public/garyjohnson.jpg?itok=NFFMhpR1", "Horst Seehofer": "https://www.stol.it/var/ezflow_site/storage/images/media/images/bildverwaltung/node_395783/horst-seehofer8/12197461-1-ger-DE/Horst-Seehofer_galerie_klein.jpg", "Manuel Neuer": "http://images4.fanpop.com/image/photos/16200000/Manuel-Neuer-manuel-neuer-16201323-105-120.jpg", "Richard Nixon": "http://www.ducksters.com/biography/uspresidents/richardnixon.jpg", "Recep Tayyip Erdogan": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Recep_Tayyip_Erdogan.PNG/140px-Recep_Tayyip_Erdogan.PNG", "Tina Bellon": null, "Chris Christie": "http://pennpoliticalreview.org/wp-content/uploads/DONUT-150x150.jpg", "Harro Ten Wolde": null, "Walter Scheel": "http://www.archontology.org/images/german/scheel.jpg", "Daren Butler": "http://static.sportskeeda.com/wp-content/uploads/2016/02/2016-02-29t134258z_1_lynxnpec1s11l_rtroptp_3_soccer-europa-gal-laz-100.jpg", "Klaus Schroeder": "http://www.galerie-epikur.de/typo3temp/pics/bba852971e.jpg", "Charles Lister": "http://www.caxtonfoundation.org.uk/scripts/editor/uploaded/Charles-Lister.jpg", "Binali Yildirim": "http://www.haberler.com/trend/54/binali-yildirim_4282_186.jpg", "Tom Miles": "http://www.arcadiarotary.org/wp-content/uploads/2008/11/Andrea-Bundesmann-150x150.jpg", "Thomas Mueller": "https://pbs.twimg.com/profile_images/1241148004/thomas_mueller_foto_klein.jpg", "Mike Pence": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Mike_Pence_February_2015_cropped_color_corrected.jpg/141px-Mike_Pence_February_2015_cropped_color_corrected.jpg", "Tayyip Erdogan": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Recep_Tayyip_Erdogan.PNG/140px-Recep_Tayyip_Erdogan.PNG", "Barack Obama": "http://static.tvgcdn.net/mediabin/showcards/celebs/a-b/thumbs/barack_obama_198527_140x187.png", "Andreas Scheuer": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Andreas_Scheuer_2013.jpg/120px-Andreas_Scheuer_2013.jpg", "Gernot Heller": "http://www.sunball-tennis.de/wp-content/uploads/2013/08/09-01-Tennis-268_opt-3416d966-100x100.jpg", "John Kerry": "http://www.thehindu.com/multimedia/dynamic/03018/TH-22-JOHN_KERRY_3018192c.jpg", "Michael Martina": "http://m.c.lnkd.licdn.com/mpr/pub/image-PyyhxnbTQg9OGHcVvo_7PCqcaZFxQASyXy_wPZGCa0SoQICxPyywX2VTapE1l5vLFAkR/michael-martina.jpg", "Malcolm Turnbull": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Malcolm_Turnbull_at_the_Pentagon_2016_cropped.jpg/127px-Malcolm_Turnbull_at_the_Pentagon_2016_cropped.jpg", "Matthew Centrowitz": "http://ichef.bbci.co.uk/sos2012/images/ic/athletes/144x180/b/bcaf1c61-14c1-4b49-8d95-5c8c1cc6d0c6.jpg", "Stephen Powell": "http://www.aasb.gov.au/admin/file/content2/c3/StephenPowell_1236223533679.jpg", "Milton Lewis": "http://blogs.denverpost.com/opinion/wp-content/blogs.dir/85/files/2013/11/Milton-Lewis-150x150.jpeg", "Thomas Jaeger": "http://cfe-strapping.com/oe_uploads/Hr_Jaeger_s.jpg", "Seda Sezer": "http://www.istanbulsanat.net/files/images/kullanici_fotolar/orta/seda.jpg", "Ben Blanchard": "http://headshots.iavvo.com/avvo/ugc/images/head_shot/standard/112808_1265361966.jpg", "Craig Spence": "http://www.lincolnastronomy.org/Lecturer%20Pics/Craig%20Spence.jpg", "Ellie Simmonds": "http://i3.birminghammail.co.uk/incoming/article177027.ece/ALTERNATES/s148/ellie-simmonds-57069956.jpg", "Trischa Zorn": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/190411_-_Greg_Smith_-_3b_-_2012_Team_processing.jpg/90px-190411_-_Greg_Smith_-_3b_-_2012_Team_processing.jpg", "Frank-Walter Steinmeier": "http://vestnikkavkaza.net/upload2/2015-08-10/3ce4cc8bfaf39954ca814e4c63001a1e.jpg", "Nigel Farage": "http://www.thetimes.co.uk/redbox/s3/redbox-prod/uploads/2016/05/Farage_400x400-150x150.png", "William James": "http://content.answcdn.com/main/content/img/BritannicaConcise/thumbnails/10710.gif", "Michel Temer Greg\u00f3rio Duvivier": null, "Sergey Lavrov": "http://www.hamovhotov.com/timeline/wp-content/uploads/2007/07/sergey-lavrov.jpg", "Daniel Dias": "http://collaboratecom.org/2010/show/home", "Michelle Martin": "http://businessbarbados.com/wp-content/uploads/userphoto/325.thumbnail.jpg", "David Weir": "https://www.edgehill.ac.uk/events/files/2014/10/David-Weir.jpg", "Ahmad Al-Masalmeh": null, "Kylie Maclellan": null, "Sarau Leituras De Poeta": null, "Jaime Burke": "http://images.nymag.com/fashion/models/jburke/jburke_profile_thumbnail_114x173.jpg", "Madeline Chambers": "http://media-cache-ec0.pinimg.com/736x/62/61/fd/6261fd00c7b11c6a097bc6b980e8eeff.jpg", "Andrea Shalal": "https://turnergpa.files.wordpress.com/2011/08/andrea-shalal-esa.jpg", "Jack Stubbs": "http://www.mdc.umn.edu/img/staff_pics/stubbs.jpg", "Erik Kirschbaum": "http://csr-news.net/directory/wp-content/photos/Riccardo_Wagner", "Roberta Rampton": "https://static-ssl.businessinsider.com/image/559e9ed9ecad043178679458-160-120/how-to-handle-a-bully-like-donald-trump.jpg", "Donald Tusk": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Donald_Tusk_3.jpg/150px-Donald_Tusk_3.jpg", "Erwin Sellering": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/13-06-20-erwin-sellering-07.jpg/100px-13-06-20-erwin-sellering-07.jpg", "Jerome Boateng": "http://fussballbilder.net/data/thumbnails/303/gratis_jerome_boateng.jpg", "Marisa Monte": "http://imagens.som13.com/1217379/marisa-monte.jpg", "Irene Preisinger": "http://k.7w7.us/xi/img/users/6/b/a/d3f7c51ea.3300250,1.jpg", "Donald Trump": "https://rashmanly.files.wordpress.com/2016/04/donald-trump.png?w=128&h=119", "John Davison": "http://m.c.lnkd.licdn.com/mpr/pub/image-lEdqvsZMiUes03zAG0zIeGk_yuaQ_PZAzEdQV5LHyX32fONllEdQ57wMyB_Tuq_S64J5/john-davison.jpg", "Michel Temer": "https://pbs.twimg.com/profile_images/1205199212/eu.jpg", "Humeyra Pamuk": "http://i.briefreport.co.uk/upload/news/thumbs/16/39/Mark_rutte_erdogan_supporters_714850.jpg", "Ricardo A": "http://atlas.equilar.com/images/705000/705794.jpg", "Bishop Wayne T. Jackson": "https://media.licdn.com/media/p/8/000/1ad/237/3b58e71.jpg", "Caroline Copley": "http://www.insurancejournal.com/wp-content/uploads/2013/08/Wauthier_Pierre_CV_72dpi-135x166.jpg", "Henry Kirwa": null, "Andreas Cremer": "http://m.c.lnkd.licdn.com/mpr/pub/image-Kksz3tvoDLQDRJ_h6rbnYhEZlaUm4G3mK8gtwbiolG1m4AH2KkstwgYol-28_Vhhgk1V/andreas-cremer.jpg", "De Janeiro": "http://www.themontrealgroup.org/DATA/PHOTO/50_tn~v~bpifrance-alain-renck-isabelle-bebear-vincent-dibetta.jpg", "Patrick Hickey": "http://www.aon.com/risk-services/thought-leadership/podcasts/images/patrick-hickey-130x168.jpg", "Luz Da Serra": "https://s3-sa-east-1.amazonaws.com/s3.eplaces.com.br/_default/eplaces/img-site/bruno-gimenes.png", "Fouad Baka": null, "Beatrix Von Storch": "http://www.ndr.de/fernsehen/storch854_v-content.jpg", "Basma Kodmani": "http://www.france5.fr/emissions/sites/default/files/styles/ftv_personne_teaser/public/images/personne/2015/09/37/kodmani.jpg?itok=vjP8dBoe", "Susan Rice": "https://traditionofexcellence.files.wordpress.com/2008/12/ricesusan.jpg", "Elizabeth Piper": "http://ak-cache.legacy.net/legacy/images/cobrands/press-citizen/photos/icp011033-1_20150814.jpgx?w=130&h=180&option=1&v=0x000000003117803e", "Edmund Blair": "https://s-media-cache-ak0.pinimg.com/avatars/vjojune-1357356934_75.jpg", "Marcelo Rebelo De Sousa": "https://1.bp.blogspot.com/-P_dqET2hSj8/Vzwd5fB-WhI/AAAAAAABMxg/5UOb31UuvA88pKF3I-hQU75PeUCSvjXbgCLcB/s1600/01095.jpg", "Armando Freitas Filho Sarau Leituras De Poeta": null, "Orrin Hatch": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Orrin_Hatch_1977_congressional_photo.jpg/146px-Orrin_Hatch_1977_congressional_photo.jpg", "Theresa May": "http://media.todaybirthdays.com/thumb_x256x256/upload/1956/10/01/theresa-may.jpg", "Georgina Prodhan": "http://www.autonews.com/apps/pbcsi.dll/storyimage/CA/20150427/BLOG06/304279884/AR/0/christiaan-hetzner.jpg&MaxW=115", "Ibrahim Kalin": "http://www.worldwisdom.com/uploads/artists/103.jpg", "Joe Biden": "http://i0.kym-cdn.com/entries/icons/square/000/016/669/bidennn.PNG", "Leif-Erik Holm": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/13-06-20-erwin-sellering-07.jpg/100px-13-06-20-erwin-sellering-07.jpg", "Vladimir Soldatkin": "http://www.tradingsat.com/media/pictures/news/reuters/2014/2014-07-28T053335Z_1007120001_LYNXMPEA6R04A_RTROPTP_1_OFRBS-RUSSIE-IOUKOS-DOMMAGES.JPG", "Bernie Sanders": "http://liberalvaluesblog.com/wp-content/uploads/2015/05/Bernie-Sanders-facebook.jpg", "William Schomberg": "https://www.justmugshots.com/img/8808516/tn/benjamin-steven-brosowski.jpg", "Xi Jinping": "http://www.eneltec-led.com/LED-Lighting-Blog/wp-content/uploads/2012/02/Xi-Jinping.jpg", "Geert Wilders": "http://www.parlement.com/9235000/p/022/02258m.jpg", "Jeff Flake": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Jeff_Flake%2C_official_portrait%2C_113th_Congress.jpg/118px-Jeff_Flake%2C_official_portrait%2C_113th_Congress.jpg", "Shinzo Abe": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Shinzo_Abe_cropped.JPG/120px-Shinzo_Abe_cropped.JPG", "Bashar Al-Assad": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Bashar_al_Assad.jpg/100px-Bashar_al_Assad.jpg", "Rio Marcelo Rebelo De Sousa": null, "Mark Potter": "http://www.sonemat.com/wp-content/themes/sonemat/assets/images/mark_potter.jpg", "Sigmar Gabriel": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Sigmar_Gabriel.jpg/93px-Sigmar_Gabriel.jpg", "Peter Tauber": "http://morgenlage.tagesspiegel.de/wp-content/uploads/2014/06/peter-tauber3.jpg", "Nick Tattersall": "http://fbwealth.co.uk/wp-content/themes/fbwm/images/about-section/nt.jpg", "Paul Ryan": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Paul_Ryan_113th_Congress.jpg/157px-Paul_Ryan_113th_Congress.jpg", "Greg\u00f3rio Duvivier": null, "Ann Kirkpatrick": "http://assets.opensecrets.org/politicians/img/N00029260.jpg", "Tim Kaine": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Tim_Kaine%2C_official_113th_Congress_photo_portrait.jpg/118px-Tim_Kaine%2C_official_113th_Congress_photo_portrait.jpg", "Abdellatif Baka": "http://i.f1g.fr/media/ext/175x175_crop/sport24.lefigaro.fr/var/plain_site/storage/images/tennis/actualites/chardy-face-a-tsonga-a-toronto-575854/13694599-1-fre-FR/Chardy-face-a-Tsonga-a-Toronto.jpg", "Mark Burns": "https://www.ebscohost.com/assets-success/mark_burns_150.jpg", "Tamiru Demisse": null, "Maria Isabel Barreno": "http://www.fletcherpeacockcommunicationsolutions.com/images/photo_fletcher.gif", "Steffen Seibert": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Steffen_Seibert.jpg/80px-Steffen_Seibert.jpg", "Jabhat Fatah Al-Sham": null, "Hillary Clinton": "http://www.uft.org/files/photo/hillary-clinton.jpg", "George W. Bush": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/GeorgeWBush.jpg/155px-GeorgeWBush.jpg", "Vikas Swarup": "http://www.infibeam.com/static/Books/images/authors/vikas-swarup.jpg", "Anna Kooiman": "http://img004.lazygirls.info/people/anna_kooiman/anna_kooiman_closeup10_lBmXEaK.thumb.jpg", "Jared Kushner": "http://img4.bdbphotos.com/images/120x156/c/1/c1jkn9q5yj344y5.jpg?skj2io4l", "John Ruwitch": null, "Lorenz Caffier": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Lorenz_Caffier_Portr%C3%A4t.JPG/100px-Lorenz_Caffier_Portr%C3%A4t.JPG", "Felicia Reese": "https://www.justmugshots.com/img/241187/tn/gabrielle-reese.jpg", "Edward Taylor": "http://blog.cleveland.com/metro/2009/05/small_Edward%20Taylor%20-%20Mug%20Shot.jpg", "Joseph Nasr": "http://www.realsatisfied.com.au/a3e2f/200139838423391403/img/?rand=273d909408ff7f568b67bd7fc4cc98cc", "Heinrich Hiesinger": "http://www.management-kolloquium.de/img_referenten/2015/Hiesinger-Heinricht-ThyssenKrupp.jpg", "Frauke Petry": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Frauke-Petry-20130820.jpg/130px-Frauke-Petry-20130820.jpg", "David Dolan": "http://global.crossrhythms.co.uk/directory_images/120.jpg", "Frieder Weinhold": "http://www.chwev.de/de/files/2009/11/Eduart_02-160x160.jpg", "Oscar Pistorius": "http://media-cache-ec0.pinimg.com/736x/26/3f/f1/263ff18c1be02244a7a123c7de7f1343.jpg", "Angela Merkel": "http://daddytips.com/wp-content/uploads/2009/04/angela-merkel-cleavage-150x150.jpg", "Ryan Woo": "http://gatherboard-images.s3.amazonaws.com/boise-events/Ryan_Woodings-lg.jpg", "Aloysio Falcao": null, "Bastian Schweinsteiger": "http://www.aufgehtsbayern.de/media/galeria/63/2/4/7/7/t_bayern_munchen_bastian_schweinsteiger-207742.jpg", "Tulay Karadeniz": "https://media.licdn.com/media/p/3/000/1c2/034/3a7e011.jpg", "Lawrence Glass": "https://www.justmugshots.com/img/431591/tn/robert-lawrence-glass.jpg", "Marine Le Pen": "http://static.guim.co.uk/sys-images/Guardian/Pix/pixies/2012/10/26/1351256471702/Marine-Le-Pen-003.jpg", "Josef Schuster": "https://wjc-org-website.s3.amazonaws.com/uploads/bio/image/168/thumb_64f58fb29a3af2078f261c25be67b63ebbed95a9.jpg", "Jan Schwartz": "https://etcjournal.files.wordpress.com/2010/09/jan_schwartz160.jpg", "Sue-Lin Wong": "http://www.lowyinterpreter.org/author/image.axd?picture=/avatars/Primary/Sue-Lin%20Wong/Sue-Lin%20Wong2.jpg", "Mitch Mcconnell": "http://www.ragingpencils.com/misc/2013/mcconnell.jpg", "Engen Tham": "http://www.goodlawyerguide.co.uk/system/bw_avatars/17204/tiny/louise-wallace.jpg?1270887287", "Jo\u00e3o Moutinho": null, "Armando Freitas Filho Terceiro": null, "Michael Grosse-Broemer": "https://causa.tagesspiegel.de/img/145x198/michael-grosse-bromer.jpeg", "Jill Stein": "http://www.greenpapers.net/wp-content/uploads/Jill-Stein.jpeg", "Philip Craven": "https://media.licdn.com/media/p/1/000/1a5/3d9/0d0295e.jpg", "Michael Ratney": "http://cdn.thedailybeast.com/etc/authors/m/michael-weiss/image.crop.96.96.jpg/46531762.cached.jpg", "Michael Nienaber": "http://www.phoenix-zement.de/cms/upload/mitarbeiter/Reinhard_Nienaber.jpg", "David Davis": "http://sustainability.wfu.edu/wp-content/uploads/2010/06/David-Davis-150x150.jpg", "Thomas Bach": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/14-01-10-tbh-015.jpg/150px-14-01-10-tbh-015.jpg", "Ben Carson": "http://www.theamericanphilosopher.com/wp-content/uploads/2015/08/Ben-Carson-150x150.jpg", "Jason Subler": null, "Rami Abdurrahman": "https://www.irishtimes.com/polopoly_fs/1.2595745.1459595630!/image/image.jpg_gen/derivatives/box_140/image.jpg", "Jacob Zuma": "http://www.sabinetlaw.co.za/files/images/zuma_jacob.jpg", "Kevin Yao": "http://www.mountsinai.org/files/fad_img_new/91/0000076810028797201691/0000072500004566763331.jpg", "Fethullah Gulen": "https://yerelce.files.wordpress.com/2011/02/fethullah-gulen.jpg", "Narendra Modi": "http://www.mustwach.com/wp-content/uploads/2015/11/narendra_modi_hand_paintitng_photo_303904507-150x150.jpg"}
 
 
 
+            function hashCode(str) { // java String#hashCode
+                var hash = 0;
+                for (var i = 0; i < str.length; i++) {
+                    hash = str.charCodeAt(i) + ((hash << 7) - hash);
+                }
+                return hash;
+            }
 
-    $(document).ready(function () {
-        var container = document.getElementById('graph');
-        var graph = Viva.Graph.graph();
-        var graphics = Viva.Graph.View.svgGraphics(), nodeSize = 32;
+            function intToRGB(i){
+                var c = (i & 0x00FFFFFF)
+                        .toString(16)
+                        .toUpperCase();
 
-        var layout = Viva.Graph.Layout.forceDirected(graph, {
-            springLength : 30,
-            springCoeff : 0.0004,
-            dragCoeff : 0.05,
-            gravity : -50,
-            theta : 0.5
-        });
-
-        var renderer = Viva.Graph.View.renderer(graph, {
-            layout:layout,
-            graphics : graphics,
-            container: container
-        });
-
-        $.each(persons, function(name, nodeData) {
-            graph.addNode(name, nodeData);
-        });
-
-        $.each(persons, function(name, nodeData) {
-            $.each(nodeData, function(pos, linked){
-                graph.addLink(name,linked);
-            })
-        });
+                return "00000".substring(0, 6 - c.length) + c;
+            }
 
 
 
-        graphics.node(
-                function(node) {
-                    var ui = Viva.Graph.svg('g'),
-                            svgText = Viva.Graph.svg('text').attr('y', '-4px').attr('x',
-                                    '-' + (nodeSize / 4) + 'px').text(node.id),
 
-                            img = images[node.id] ? Viva.Graph.svg('image').attr('width',
-                                    nodeSize).attr('height', nodeSize)
-                                    .link(
-                                    images[node.id]) : Viva.Graph.svg(
-                                    'rect').attr('width', nodeSize)
-                                    .attr('height', nodeSize).attr('fill','#09233e');
+            $(document).ready(function () {
+                var container = document.getElementById('graph');
+                var graph = Viva.Graph.graph();
+                var graphics = Viva.Graph.View.svgGraphics(), nodeSize = 32;
 
-
-                    $(ui).hover(function() {
-                        handleMouseOver(node);
-                    }, function() {
-                        handleMouseOut(node);
-                    });
-
-                    $(ui).dblclick(function() {
-                        handleMouseDblClick(node)
-                    });
-
-                    ui.addEventListener('click', function () {
-                        // toggle pinned mode
-                        layout.pinNode(node, !layout.isNodePinned(node));
-                    });
-
-
-
-                    ui.append(svgText);
-                    ui.append(img);
-                    return ui;
-                }).placeNode(
-                function(nodeUI, pos) {
-                    nodeUI.attr('transform', 'translate(' + (pos.x - nodeSize / 2)
-                            + ',' + (pos.y - nodeSize / 2) + ')');
+                var layout = Viva.Graph.Layout.forceDirected(graph, {
+                    springLength : 30,
+                    springCoeff : 0.0004,
+                    dragCoeff : 0.05,
+                    gravity : -50,
+                    theta : 0.5
                 });
 
-        graphics.link(
-                function(link) {
-                    var colortmp = "#" + intToRGB(hashCode(link.toId));
-                    return Viva.Graph.svg('path').attr('stroke', colortmp);
-                }).placeLink(
-                function(linkUI, fromPos, toPos) {
-                    var data = 'M' + fromPos.x + ',' + fromPos.y + 'L'
-                            + toPos.x + ',' + toPos.y;
-
-                    linkUI.attr("d", data);
+                var renderer = Viva.Graph.View.renderer(graph, {
+                    layout:layout,
+                    graphics : graphics,
+                    container: container
                 });
 
-        var handleMouseDblClick = function(node) {
-            window.open("https://www.google.com/?gfe_rd=cr#q=" + encodeURI(node.id))
-        };
+                $.each(persons, function(name, nodeData) {
+                    graph.addNode(name, nodeData);
+                });
 
-        var handleMouseOver = function(node) {
-            document.body.style.cursor = 'pointer';
-            graph.forEachLinkedNode(node.id, function(node, link){
+                $.each(persons, function(name, nodeData) {
+                    $.each(nodeData, function(pos, linked){
+                        graph.addLink(name,linked);
+                    })
+                });
 
-                var linkUI = graphics.getLinkUI(link.id);
-                if (linkUI) {
-                    linkUI.attr('stroke', 'red' );
-                    linkUI.attr('stroke-width', '3px' );
-                }
 
-                var nodeUI = graphics.getNodeUI(node.id);
-                if(nodeUI) {
-                    nodeUI.attr('font-weight', 'bold' );
-                }
+
+                graphics.node(
+                        function(node) {
+                            var ui = Viva.Graph.svg('g'),
+                                    svgText = Viva.Graph.svg('text').attr('y', '-4px').attr('x',
+                                            '-' + (nodeSize / 4) + 'px').text(node.id),
+
+                                    img = images[node.id] ? Viva.Graph.svg('image').attr('width',
+                                            nodeSize).attr('height', nodeSize)
+                                            .link(
+                                            images[node.id]) : Viva.Graph.svg(
+                                            'rect').attr('width', nodeSize)
+                                            .attr('height', nodeSize).attr('fill','#09233e');
+
+
+                            $(ui).hover(function() {
+                                handleMouseOver(node);
+                            }, function() {
+                                handleMouseOut(node);
+                            });
+
+                            $(ui).dblclick(function() {
+                                handleMouseDblClick(node)
+                            });
+
+                            ui.addEventListener('click', function () {
+                                // toggle pinned mode
+                                layout.pinNode(node, !layout.isNodePinned(node));
+                            });
+
+
+
+                            ui.append(svgText);
+                            ui.append(img);
+                            return ui;
+                        }).placeNode(
+                        function(nodeUI, pos) {
+                            nodeUI.attr('transform', 'translate(' + (pos.x - nodeSize / 2)
+                                    + ',' + (pos.y - nodeSize / 2) + ')');
+                        });
+
+                graphics.link(
+                        function(link) {
+                            var colortmp = "#" + intToRGB(hashCode(link.toId));
+                            return Viva.Graph.svg('path').attr('stroke', colortmp);
+                        }).placeLink(
+                        function(linkUI, fromPos, toPos) {
+                            var data = 'M' + fromPos.x + ',' + fromPos.y + 'L'
+                                    + toPos.x + ',' + toPos.y;
+
+                            linkUI.attr("d", data);
+                        });
+
+                var handleMouseDblClick = function(node) {
+                    window.open("https://www.google.com/?gfe_rd=cr#q=" + encodeURI(node.id))
+                };
+
+                var handleMouseOver = function(node) {
+                    document.body.style.cursor = 'pointer';
+                    graph.forEachLinkedNode(node.id, function(node, link){
+
+                        var linkUI = graphics.getLinkUI(link.id);
+                        if (linkUI) {
+                            linkUI.attr('stroke', 'red' );
+                            linkUI.attr('stroke-width', '3px' );
+                        }
+
+                        var nodeUI = graphics.getNodeUI(node.id);
+                        if(nodeUI) {
+                            nodeUI.attr('font-weight', 'bold' );
+                        }
+                    });
+                };
+
+                var handleMouseOut = function(node) {
+                    document.body.style.cursor = 'auto';
+                    graph.forEachLinkedNode(node.id, function(node, link){
+                        var linkUI = graphics.getLinkUI(link.id);
+                        if (linkUI) {
+                            var colortmp = "#" + intToRGB(hashCode(link.toId));
+                            linkUI.attr('stroke', colortmp );
+                            linkUI.attr('stroke-width', '1px' );
+                        }
+
+                        var nodeUI = graphics.getNodeUI(node.id);
+                        if(nodeUI) {
+                            nodeUI.attr('font-weight', 'normal' );
+                        }
+                    });
+                };
+
+                renderer.run();
             });
-        };
-
-        var handleMouseOut = function(node) {
-            document.body.style.cursor = 'auto';
-            graph.forEachLinkedNode(node.id, function(node, link){
-                var linkUI = graphics.getLinkUI(link.id);
-                if (linkUI) {
-                    var colortmp = "#" + intToRGB(hashCode(link.toId));
-                    linkUI.attr('stroke', colortmp );
-                    linkUI.attr('stroke-width', '1px' );
-                }
-
-                var nodeUI = graphics.getNodeUI(node.id);
-                if(nodeUI) {
-                    nodeUI.attr('font-weight', 'normal' );
-                }
-            });
-        };
-
-        renderer.run();
-    });
-</script>
-
-<div id="graph"></div>
+        </script>
+</head>
+<body>    
+    <div id="graph"></div>
+</body>
+</html>
