@@ -1,6 +1,6 @@
 Cool-Useless-Demo
 =================
-A cool (but quite useless) entity graph generator using `webhose.io <https://webhose.io>`_.
+A cool (but quite useless) entity graph generator using `webhose.io <https://webhose.io>`_. To learn more about the code, read the `following post <https://webhose.io/demo/cool-useless-demo/>`_.
 
 Dependencies
 ------------
