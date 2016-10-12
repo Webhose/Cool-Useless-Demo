@@ -9,6 +9,10 @@ Answer
 ------
 I’m sure you’ve asked yourself these questions before (who hasn’t?). In any case, ponder no further, for I’ve taken the time to hack a script that does just that! I’ve created a short Python script that queries `webhose.io <https://webhose.io>`_ for news and blog articles that mention Hillary Clinton. The Webhose.io API returns the mentioned personalities in each article, and the script indentifies the top 5 people mentioned. The script runs for each mentioned personality, until it reaches a list of 100 names. I plugged the dataset into the `VivaGraphJS <https://github.com/anvaka/VivaGraphJS>`_ library, and plotted the list into a cool blob of a graph.
 
+DEMO
+----
+https://webhose.io/demo/cool-useless-demo
+
 Screenshot
 ----------
 .. image:: https://raw.githubusercontent.com/Webhose/Cool-Useless-Demo/master/cool-useless-demo.png
